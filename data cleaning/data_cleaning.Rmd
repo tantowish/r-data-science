@@ -1,0 +1,137 @@
+---
+title: "Data Cleaning"
+author: "Jhony Kurniawan"
+date: "2024-08-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+dataset <- read.csv("psychology_data.csv", header = TRUE, sep = ",")
+head(dataset)
+```
+```{r}
+summary(dataset_clean)
+```
+```{r}
+# Mencari row duplikat berdasarkan ParticipantID
+duplicates <- dataset[duplicated(dataset$ParticipantID)]
+num_duplicates <- nrow(duplicates)
+
+cat("Jumlah duplikat berdasarkan ParticipantID: ", num_duplicates, "\n")
+```
+```{r}
+# Menghapus data yang duplikat
+dataset_clean <- dataset[!duplicated(dataset$ParticipantID),]
+head(dataset_clean)
+```
+```{r}
+# Mengubah kapitalisasi nama
+dataset_clean$Name <- tolower(dataset_clean$Name)
+dataset_clean$Name <- gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2", dataset_clean$Name, perl = TRUE)
+
+head(dataset_clean)
+```
+```{r}
+# Filter invalid age dan ganti age yang tidak sesuai menjadi NA
+invalid_age <- which(dataset_clean$Age < 18 | dataset_clean$Age > 75)
+dataset_clean$Age[invalid_age] <- NA
+
+# Hitung mean lalu ganti NA menjadi mean (dibulatkan)
+mean_age <- round(mean(dataset_clean$Age, na.rm = TRUE))  # Round the mean to the nearest integer
+dataset_clean$Age[is.na(dataset_clean$Age)] <- mean_age  # Replace NA with the rounded mean
+
+# Menampilkan ringkasan
+summary(dataset_clean$Age)
+```
+```{r}
+head(dataset_clean)
+```
+```{r}
+summary(dataset_clean)
+```
+```{r}
+# Filter StressLevel yang tidak valid dan ganti dengan NA
+invalid_stress <- which(dataset_clean$StressLevel < 0 | dataset_clean$StressLevel > 6)
+dataset_clean$StressLevel[invalid_stress] <- NA
+
+# Hitung rata-rata StressLevel, lalu ganti NA dengan nilai rata-rata yang dibulatkan
+mean_stress <- round(mean(dataset_clean$StressLevel, na.rm = TRUE))
+dataset_clean$StressLevel[is.na(dataset_clean$StressLevel)] <- mean_stress
+
+# Filter AnxietyScore yang tidak valid dan ganti dengan NA
+invalid_anxiety <- which(dataset_clean$AnxietyScore < 0 | dataset_clean$AnxietyScore > 25)
+dataset_clean$AnxietyScore[invalid_anxiety] <- NA
+
+# Hitung rata-rata AnxietyScore, lalu ganti NA dengan nilai rata-rata yang dibulatkan
+mean_anxiety <- round(mean(dataset_clean$AnxietyScore, na.rm = TRUE))
+dataset_clean$AnxietyScore[is.na(dataset_clean$AnxietyScore)] <- mean_anxiety
+
+# Menampilkan ringkasan setelah membersihkan StressLevel dan AnxietyScore
+summary(dataset_clean$StressLevel)
+summary(dataset_clean$AnxietyScore)
+```
+```{r}
+dataset_clean
+```
+```{r}
+# Mengganti nilai "F" menjadi "Female" dan "M" menjadi "Male"
+dataset_clean$Gender <- gsub("^F$", "Female", dataset_clean$Gender)
+dataset_clean$Gender <- gsub("^M$", "Male", dataset_clean$Gender)
+
+# Menghitung kemunculan Female dan Male
+gender_count <- table(dataset_clean$Gender)
+most_frequent_gender <- names(gender_count[which.max(gender_count)])
+
+# Mengganti "O" (Other) dan NA dengan gender yang paling sering muncul
+dataset_clean$Gender[dataset_clean$Gender == "O"] <- most_frequent_gender
+dataset_clean$Gender[dataset_clean$Gender == "Other"] <- most_frequent_gender
+dataset_clean$Gender[is.na(dataset_clean$Gender)] <- most_frequent_gender
+
+# Menampilkan ringkasan hasil pembersihan Gender
+summary(dataset_clean$Gender)
+```
+```{r}
+dataset_clean
+```
+```{r}
+# Mengganti "None" dan "NA" dengan "Not Assessed" pada kolom DepressionSeverity
+dataset_clean$DepressionSeverity[dataset_clean$DepressionSeverity == "None"] <- "Not Assessed"
+dataset_clean$DepressionSeverity[is.na(dataset_clean$DepressionSeverity)] <- "Not Assessed"
+
+# Menampilkan ringkasan hasil pembersihan DepressionSeverity
+summary(dataset_clean$DepressionSeverity)
+```
+```{r}
+dataset_clean
+```
+
+```{r}
+# Mengganti format tanggal
+dataset_clean$SurveyCompletionDate <- gsub("/", "-", dataset_clean$SurveyCompletionDate)
+
+# Mengganti format tanggal dari MM-DD-YYYY ke YYYY-MM-DD
+dataset_clean$SurveyCompletionDate <- gsub("(\\d{2})-(\\d{2})-(\\d{4})", "\\3-\\1-\\2", dataset_clean$SurveyCompletionDate)
+
+# Mengganti format tanggal dari "July 20, 2023" menjadi "2023-07-20"
+dataset_clean$SurveyCompletionDate[grepl("^[A-Za-z]+ \\d{1,2}, \\d{4}$", dataset_clean$SurveyCompletionDate)] <- 
+  format(as.Date(dataset_clean$SurveyCompletionDate[grepl("^[A-Za-z]+ \\d{1,2}, \\d{4}$", dataset_clean$SurveyCompletionDate)], 
+                  format = "%B %d, %Y"), 
+         "%Y-%m-%d")
+
+```
+
+```{r}
+dataset_clean
+```
+```{r}
+# Menghapus baris dengan tanggal NA
+dataset_clean <- na.omit(dataset_clean)
+dataset_clean
+```
+```{r}
+# Save to CSV
+write.csv(dataset_clean, "data_cleaning.csv", row.names = FALSE)
+```
+

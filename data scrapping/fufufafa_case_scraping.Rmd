@@ -1,0 +1,112 @@
+---
+title: "fufufafa case"
+author: "Jhony Kurniawan"
+date: "2024-08-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(tidytext)
+library(httr)
+library(tidyverse)
+```
+
+```{r}
+# Function to extract titles and URLs from a single page
+scrape_page <- function(page_number) {
+  
+  start_index <- (page_number - 1) * 10
+  search_url <- paste0("https://www.google.com/search?q=fufufafa&sca_esv=83deed022e42a993&tbm=nws&sxsrf=ADLYWIKemoFvmXrC9i0vvJSKqHoWKwIcag%3A1727880613949&ei=pV39ZsrBOajx4-EP7P-ayAU&ved=0ahUKEwiKqNXx-O-IAxWo-DgGHey_BlkQ4dUDCA0&uact=5&oq=fufufafa&gs_lp=Egxnd3Mtd2l6LW5ld3MiCGZ1ZnVmYWZhSLgCUABYAHAAeACQAQCYAQCgAQCqAQC4AQPIAQD4AQGYAgCgAgCYAwCSBwCgBwA&sclient=gws-wiz-news", start_index)
+  
+  webpage <- read_html(search_url)
+  
+  titles <- webpage %>% html_nodes("div.BNeawe.vvjwJb.AP7Wnd") %>% html_text()
+  urls <- webpage %>% html_nodes("a[href^='/url']") %>% html_attr("href")
+  
+  # Clean URLs to remove Google's tracking parameters and ensure they are valid
+  urls <- gsub("/url\\?q=", "", urls)
+  urls <- gsub("&sa=.*", "", urls)
+  urls <- gsub("https://", "", urls)
+  urls <- paste0("https://", urls) # Re-add https:// if needed
+  list(titles = titles, urls = urls)
+}
+```
+
+```{r}
+all_titles <- c()
+all_urls <- c()
+
+# Scrape up to 10 pages
+for (page in 1:10) {
+  cat("Scraping page", page, "\n")
+  page_data <- scrape_page(page)
+  all_titles <- c(all_titles, page_data$titles)
+  all_urls <- c(all_urls, page_data$urls)
+  Sys.sleep(2)
+}
+```
+
+```{r}
+# Initialize a vector to store content
+content <- vector("character", length(all_urls))
+
+# Loop through each URL to extract the article content
+for (i in seq_along(all_urls)) {
+  article_url <- all_urls[i]
+  # Handle potential redirects and errors
+  tryCatch({
+    # Make the request
+    response <- GET(article_url)
+    
+    print(response)
+    # Check if the status is OK
+    if (status_code(response) == 200) {
+      # Read the article page
+      article_page <- read_html(content(response, "text"))
+      
+      # Extract the content
+      article_content <- article_page %>%
+        html_nodes("p") %>% # Adjust selector if needed
+        html_text() %>%
+        paste(collapse = " ") # Combine paragraphs into a single string
+      
+       article_content <- gsub("\r\n", " ", article_content) # Replace \r\n with a space
+      article_content <- gsub("\n", " ", article_content) # Handle any remaining \n characters
+      
+      # Append content to the vector
+      content[i] <- article_content
+    } else {
+      content[i] <- NA # Handle missing content
+    }
+  }, error = function(e) {
+    content[i] <- NA # Handle errors
+  })
+}
+
+# Print the content vector at the end
+print(content)
+```
+
+```{r}
+# Adjust lengths if necessary
+min_length <- min(length(all_titles), length(all_urls), length(content))
+
+# Create the data frame with synchronized lengths
+news_data <- data.frame(
+  title = all_titles[1:min_length],
+  url = all_urls[1:min_length],
+  content = content[1:min_length],
+  stringsAsFactors = FALSE
+)
+```
+
+```{r}
+# Print the data frame
+print(news_data)
+
+# Save to CSV
+write.csv(news_data, "google_news_fufufafa_case.csv", row.names = FALSE)
+```
+

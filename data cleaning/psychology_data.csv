@@ -1,0 +1,101 @@
+ParticipantID,Name,Age,Gender,StressLevel,AnxietyScore,DepressionSeverity,SurveyCompletionDate
+1,Alice Johnson,89,O,6,24.83827204,Moderate,"July 20, 2023"
+2,Erin Miles,61,O,NA,13.11234963,Mild,2023/05/01
+3,Alice Johnson,32,Other,6,16.94370589,Not Assessed,"July 20, 2023"
+4,Jane DOE,77,Male,NA,13.32276223,Severe,2023/05/01
+5,Jane DOE,61,Female,1,15.03959252,None,2023-07-15
+6,Erin Miles,69,Female,4,18.54568671,Not Assessed,2023/05/01
+7,Alice Johnson,50,Male,2,19.80417021,NA,05-12-2023
+8,Chris Johnson,39,Female,NA,17.44679751,Not Assessed,05-12-2023
+9,Bob Smith,22,Male,2,12.95374058,NA,NA
+10,Erin Miles,38,F,4,18.55383061,None,2023-07-15
+11,Erin Miles,41,Female,1,17.75952365,NA,NA
+12,John Doe,47,Other,4,9.677220029,Mild,05-12-2023
+13,Jane DOE,22,F,5,8.656443363,Mild,2023/05/01
+14,Alice Johnson,42,NA,5,11.7035625,None,05-12-2023
+15,Chris Johnson,57,M,3,13.83250514,NA,NA
+16,Alice Johnson,20,F,6,18.55383061,Severe,2023-07-15
+17,Alice Johnson,85,Female,5,13.74458874,Not Assessed,"July 20, 2023"
+18,John Doe,31,Male,5,22.20420342,Moderate,2023-07-15
+19,Bob Smith,39,M,3,18.45933767,Mild,2023/05/01
+20,John Doe,47,O,1,12.70421802,None,2023-07-15
+21,John Doe,36,Female,3,-5,None,05-12-2023
+22,Chris Johnson,70,O,4,24.83827204,NA,05-12-2023
+23,Alice Johnson,90,NA,2,18.54568671,None,2023-07-15
+24,Jane DOE,51,F,5,12.95374058,Severe,2023-07-15
+25,Jane DOE,54,Male,1,18.70308237,Moderate,NA
+26,John Doe,69,F,6,11.64892958,Moderate,"July 20, 2023"
+27,Erin Miles,24,Male,4,10.30479113,Severe,2023-07-15
+28,Alice Johnson,86,M,NA,16.28240432,Not Assessed,05-12-2023
+29,Bob Smith,63,Other,3,13.83231697,NA,2023/05/01
+30,Erin Miles,71,Male,NA,19.42148854,None,"July 20, 2023"
+31,John Doe,54,O,1,20.88388895,Severe,05-12-2023
+32,Alice Johnson,83,Male,2,19.22135436,Severe,2023-07-15
+33,Chris Johnson,16,Female,6,17.56145198,Mild,2023/05/01
+34,Bob Smith,55,M,NA,17.26931777,Not Assessed,NA
+35,Jane DOE,45,Female,3,8.182137805,Not Assessed,NA
+36,Chris Johnson,31,Male,3,18.11346002,Mild,05-12-2023
+37,John Doe,69,F,1,16.72333269,Mild,2023/05/01
+38,John Doe,90,F,2,19.22135436,Mild,2023-07-15
+39,Jane DOE,63,Male,-1,17.26931777,Not Assessed,05-12-2023
+40,Alice Johnson,35,NA,1,8.807038972,Not Assessed,2023/05/01
+41,Bob Smith,82,Male,NA,17.95808531,None,2023/05/01
+42,Chris Johnson,51,F,2,13.46459963,Moderate,2023-07-15
+43,Chris Johnson,67,F,-1,14.22783833,NA,2023-07-15
+44,Alice Johnson,37,Female,2,11.91099995,Moderate,NA
+45,Erin Miles,64,Female,-1,14.90036083,None,05-12-2023
+46,John Doe,57,NA,2,18.54568671,Moderate,2023-07-15
+47,Jane DOE,74,O,5,6.644908225,NA,2023-07-15
+48,Chris Johnson,26,NA,4,17.26931777,Mild,"July 20, 2023"
+49,Chris Johnson,70,F,NA,15.29999811,Severe,2023/05/01
+50,Bob Smith,23,Male,4,17.26931777,Not Assessed,05-12-2023
+51,Chris Johnson,61,Male,5,17.24500136,Severe,2023-07-15
+52,Jane DOE,81,F,4,15.88219532,Mild,2023-07-15
+53,John Doe,61,F,NA,18.70308237,Moderate,NA
+54,John Doe,85,M,1,13.61599645,None,NA
+55,Alice Johnson,87,NA,-1,13.65027539,None,NA
+56,John Doe,59,F,-1,17.95808531,Mild,"July 20, 2023"
+57,Erin Miles,47,F,6,NA,Not Assessed,"July 20, 2023"
+58,Chris Johnson,51,NA,2,18.45933767,Mild,NA
+59,John Doe,60,NA,1,17.44679751,None,NA
+60,Jane DOE,29,M,6,8.656443363,Severe,2023-07-15
+61,Bob Smith,31,Female,2,16.85976701,None,"July 20, 2023"
+62,Bob Smith,48,F,-1,17.26931777,Not Assessed,2023-07-15
+63,Erin Miles,55,Male,3,16.28240432,Not Assessed,2023-07-15
+64,Erin Miles,55,Male,2,13.65027539,NA,NA
+65,Alice Johnson,25,Female,6,17.95808531,None,"July 20, 2023"
+66,Erin Miles,87,Male,3,18.11346002,Severe,05-12-2023
+67,Erin Miles,24,Female,1,9.520896957,Severe,05-12-2023
+68,John Doe,22,F,4,18.38695436,Moderate,2023-07-15
+69,Erin Miles,22,Male,2,11.91099995,Not Assessed,2023-07-15
+70,Jane DOE,73,NA,3,18.55383061,Not Assessed,2023/05/01
+71,John Doe,76,Other,5,11.30815674,Mild,05-12-2023
+72,Jane DOE,89,Female,5,19.058113,Severe,"July 20, 2023"
+73,Bob Smith,39,Female,6,9.520896957,Moderate,05-12-2023
+74,Chris Johnson,78,F,NA,11.21080688,Severe,"July 20, 2023"
+75,Chris Johnson,69,NA,3,19.27568514,None,2023/05/01
+76,Erin Miles,38,M,NA,6.438326065,Moderate,2023-07-15
+77,Alice Johnson,41,Male,NA,9.677220029,Not Assessed,NA
+78,John Doe,48,F,2,8.656443363,Severe,05-12-2023
+79,Bob Smith,72,Female,-1,18.45933767,Severe,"July 20, 2023"
+80,Erin Miles,44,F,5,11.21080688,Moderate,"July 20, 2023"
+81,John Doe,25,O,4,8.807038972,Moderate,"July 20, 2023"
+82,Erin Miles,68,Female,2,15.67618094,None,NA
+83,John Doe,69,Female,1,11.7035625,Moderate,05-12-2023
+84,Alice Johnson,26,O,-1,19.83386728,NA,05-12-2023
+85,Erin Miles,40,M,4,7.195877561,Mild,2023-07-15
+86,Bob Smith,67,Other,1,11.23857989,None,2023-07-15
+87,John Doe,41,M,4,13.61599645,Mild,2023-07-15
+88,Erin Miles,22,Other,5,13.65027539,Not Assessed,2023-07-15
+89,Erin Miles,40,Other,4,16.85976701,Moderate,2023-07-15
+90,Alice Johnson,47,Other,2,17.95808531,Not Assessed,05-12-2023
+91,Erin Miles,39,F,2,13.83250514,Moderate,2023/05/01
+92,Chris Johnson,72,NA,4,16.95632127,Moderate,2023/05/01
+93,Alice Johnson,88,Other,6,10.97533541,Severe,2023/05/01
+94,Erin Miles,38,NA,3,7.589698801,Moderate,2023/05/01
+95,Jane DOE,29,Female,5,14.90036083,NA,05-12-2023
+96,Chris Johnson,NA,NA,NA,15.88219532,NA,2023/05/01
+97,Chris Johnson,25,NA,-1,20.26722273,Severe,2023-07-15
+98,Alice Johnson,34,Other,-1,13.94161905,Severe,05-12-2023
+99,Jane DOE,110,Male,2,13.83250514,Mild,NA
+100,Jane DOE,22,F,6,13.36456091,Mild,NA

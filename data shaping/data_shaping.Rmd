@@ -1,0 +1,155 @@
+---
+title: "Untitled"
+author: "Jhony Kurniawan"
+date: "2024-09-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(DT)
+
+# To read Excel file
+library(readxl)
+```
+```{r}
+# Read Excel
+dataExcel <- read_excel("psychology_wide_data_with_missing.xlsx", sheet=1)
+
+# Convert to CSV
+write.csv(dataExcel, "psychology_wide_data_with_missing.csv", row.names = FALSE)
+
+# Read CSV
+dataset <- read.csv("psychology_wide_data_with_missing.csv")
+
+datatable(dataset)
+```
+```{r}
+# Convert from wide to long format
+long_data <- dataset %>%
+  pivot_longer(
+    cols = starts_with("Stress") | starts_with("Mood"),
+    names_to = c("Type", "Time"),
+    names_sep = "_"
+  ) %>%
+  pivot_wider(
+    names_from = Type,
+    values_from = value
+  )
+```
+```{r}
+datatable(long_data)
+```
+```{r}
+# Check missing data
+missing_stress <- long_data %>%
+  filter(is.na(Stress)) %>%
+  select(Participant_ID, Time, Stress)
+missing_mood <- long_data %>%
+  filter(is.na(Mood)) %>%
+  select(Participant_ID, Time, Mood)
+
+# Print the rows with missing Stress values
+if(nrow(missing_stress) > 0) {
+  print("Missing Stress Data:")
+  print(missing_stress)
+} else {
+  print("No missing data for Stress.")
+}
+
+# Print the rows with missing Mood values
+if(nrow(missing_mood) > 0) {
+  print("Missing Mood Data:")
+  print(missing_mood)
+} else {
+  print("No missing data for Mood")
+}
+```
+```{r}
+
+# Menghitung rata-rata untuk Stress pada setiap titik waktu (T1, T2, T3)
+mean_t1_stress <- long_data %>%
+  filter(Time == "T1" & !is.na(Stress)) %>%
+  summarise(mean_stress = mean(Stress, na.rm = TRUE)) %>%
+  pull(mean_stress)
+
+mean_t2_stress <- long_data %>%
+  filter(Time == "T2" & !is.na(Stress)) %>%
+  summarise(mean_stress = mean(Stress, na.rm = TRUE)) %>%
+  pull(mean_stress)
+
+mean_t3_stress <- long_data %>%
+  filter(Time == "T3" & !is.na(Stress)) %>%
+  summarise(mean_stress = mean(Stress, na.rm = TRUE)) %>%
+  pull(mean_stress)
+
+# Menghitung rata-rata untuk Mood pada setiap titik waktu (T1, T2, T3)
+mean_t1_mood <- long_data %>%
+  filter(Time == "T1" & !is.na(Mood)) %>%
+  summarise(mean_mood = mean(Mood, na.rm = TRUE)) %>%
+  pull(mean_mood)
+
+mean_t2_mood <- long_data %>%
+  filter(Time == "T2" & !is.na(Mood)) %>%
+  summarise(mean_mood = mean(Mood, na.rm = TRUE)) %>%
+  pull(mean_mood)
+
+mean_t3_mood <- long_data %>%
+  filter(Time == "T3" & !is.na(Mood)) %>%
+  summarise(mean_mood = mean(Mood, na.rm = TRUE)) %>%
+  pull(mean_mood)
+
+# Mengimputasi nilai Stress yang hilang dengan rata-rata yang sesuai
+data_stress_clean <- long_data %>%
+  mutate(Stress = case_when(
+    is.na(Stress) & Time == "T1" ~ mean_t1_stress,
+    is.na(Stress) & Time == "T2" ~ mean_t2_stress,
+    is.na(Stress) & Time == "T3" ~ mean_t3_stress,
+    TRUE ~ Stress
+  ))
+
+# Mengimputasi nilai Mood yang hilang dengan rata-rata yang sesuai
+data_clean <- data_stress_clean %>%
+  mutate(Mood = case_when(
+    is.na(Mood) & Time == "T1" ~ mean_t1_mood,
+    is.na(Mood) & Time == "T2" ~ mean_t2_mood,
+    is.na(Mood) & Time == "T3" ~ mean_t3_mood,
+    TRUE ~ Mood
+  ))
+
+# Menampilkan data yang sudah dibersihkan
+datatable(data_clean)
+```
+```{r}
+# Check missing data
+missing_stress <- data_clean %>%
+  filter(is.na(Stress)) %>%
+  select(Participant_ID, Time, Stress)
+missing_mood <- data_clean %>%
+  filter(is.na(Mood)) %>%
+  select(Participant_ID, Time, Mood)
+
+# Print the rows with missing Stress values
+if(nrow(missing_stress) > 0) {
+  print("Missing Stress Data:")
+  print(missing_stress)
+} else {
+  print("No missing data for Stress.")
+}
+
+# Print the rows with missing Mood values
+if(nrow(missing_mood) > 0) {
+  print("Missing Mood Data:")
+  print(missing_mood)
+} else {
+  print("No missing data for Mood")
+}
+```
+```{r}
+write.csv(data_clean, "data_shaping.csv", row.names = FALSE)
+```
+
