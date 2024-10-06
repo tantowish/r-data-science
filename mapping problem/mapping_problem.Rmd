@@ -1,0 +1,99 @@
+---
+title: "mapping problem"
+author: "Jhony Kurniawan"
+date: "2024-09-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(corrplot)
+library(ggplot2)
+library(reshape2)
+```
+```{r}
+# Membaca dataset dari file CSV
+data <- read.csv("StressLevelDataset.csv")
+
+# Memilih hanya variabel yang diperlukan: self_esteem, academic_performance, dan sleep_quality
+dataset <- data[, c("self_esteem", "academic_performance", "sleep_quality")]
+
+# Melihat data yang dipilih
+dataset
+```
+```{r}
+# Memeriksa jumlah data yang hilang di setiap kolom
+missing_data <- colSums(is.na(dataset))
+print(missing_data)
+```
+```{r}
+summary(dataset)
+```
+```{r}
+# Histogram for self_esteem
+ggplot(dataset, aes(x = self_esteem)) + geom_histogram(binwidth = 1, fill = "red", color = "black") + theme_minimal()
+```
+```{r}
+# Histogram for academic_performance
+ggplot(dataset, aes(x = academic_performance)) + geom_histogram(binwidth = 1, fill = "green", color = "black") + theme_minimal()
+```
+```{r}
+# Histogram for sleep_quality
+ggplot(dataset, aes(x = sleep_quality)) + geom_histogram(binwidth = 1, fill = "blue", color = "black") + theme_minimal()
+```
+```{r}
+# Menghitung matriks korelasi
+correlation_matrix <- cor(dataset, use = "complete.obs")
+print(correlation_matrix)
+
+melted_corr <- melt(correlation_matrix)
+
+ggplot(melted_corr, aes(Var1, Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+                       limit = c(-1, 1), space = "Lab", 
+                       name="Correlation") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                     size = 12, hjust = 1)) +
+  coord_fixed()
+```
+```{r}
+# Boxplot to identify outliers
+boxplot(dataset$self_esteem, main = "Self Esteem")
+boxplot(dataset$academic_performance, main = "Academic Performance")
+boxplot(dataset$sleep_quality, main = "Sleep Quality")
+```
+```{r}
+# Membangun model regresi linier
+model <- lm(sleep_quality ~ self_esteem + academic_performance, data = dataset)
+
+# Melihat ringkasan model regresi
+summary(model)
+```
+```{r}
+# Menggambarkan regresi untuk self_esteem
+plot_self_esteem <- ggplot(dataset, aes(x = self_esteem, y = sleep_quality)) +
+  geom_point() +  # Menambahkan titik
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Garis regresi
+  labs(title = "Regresi Linier: Self Esteem vs Sleep Quality",
+       x = "Self Esteem",
+       y = "Sleep Quality") +
+  theme_minimal()
+
+# Menggambarkan regresi untuk academic_performance
+plot_academic_performance <- ggplot(dataset, aes(x = academic_performance, y = sleep_quality)) +
+  geom_point() +  # Menambahkan titik
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Garis regresi
+  labs(title = "Regresi Linier: Academic Performance vs Sleep Quality",
+       x = "Academic Performance",
+       y = "Sleep Quality") +
+  theme_minimal()
+
+# Menampilkan plot
+print(plot_self_esteem)
+print(plot_academic_performance)
+```
+

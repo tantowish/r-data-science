@@ -1,0 +1,21 @@
+a. Identifikasi sumber data. Apakah mengumpulkan data dari survei, eksperimen, atau menggunakan dataset yang sudah ada.
+Dataset:
+https://www.kaggle.com/datasets/rxnach/student-stress-factors-a-comprehensive-analysis
+Hanya menganalisis kolom self_esteem, academic_performance, sleep_quality
+
+b. Jelaskan proses yang akan dilakukan untuk membersihkan dan menyiapkan data sebelum analisis.
+Proses pembersihan dan persiapan data meliputi menangani missing values dengan imputasi atau penghapusan, mengidentifikasi dan memperbaiki data tidak konsisten (outlier), serta menangani nilai ekstrem dengan deteksi dan transformasi. Selanjutnya, variabel dapat dinormalisasi atau distandardisasi untuk memastikan perbandingan yang adil memastikan data siap untuk dianalisis secara akurat.
+
+a. Tentukan model statistic yang sesuai untuk menguji hubungan antara variable.
+untuk lebih memahami hubungan dan pengaruh antar variabel, model yang paling sesuai adalah regresi linier berganda.
+
+Regresi linier berganda: Model ini dapat digunakan untuk menguji pengaruh self-esteem dan sleep quality terhadap academic performance secara simultan. Dengan model ini, kita dapat melihat apakah perubahan dalam self-esteem dan kualitas tidur secara bersama-sama dapat memprediksi kinerja akademik.
+Alasan memilih model ini:
+
+Kedua prediktor (self-esteem dan sleep quality) serta variabel yang diprediksi (academic performance) adalah data kontinu.
+Model regresi linier berganda memungkinkan untuk melihat pengaruh relatif dari masing-masing prediktor terhadap variabel dependen (academic performance) sambil mengendalikan prediktor lainnya.
+
+a. Jelaskan hasil analisis dalam konteks psikologi: Apa yang bisa disimpulkan dari hubungan antara academic performance, self-esteem, dan sleep quality. Diskusikan implikasi dari hasil tersebut.
+Berdasarkan analisis korelasi dan regresi linier, hubungan antara academic performance, self-esteem, dan sleep quality dapat dijelaskan sebagai berikut: Jika terdapat korelasi positif antara self-esteem dan academic performance, maka semakin tinggi self-esteem seseorang, semakin baik kinerja akademiknya. Hal ini konsisten dengan teori psikologi yang menyatakan bahwa kepercayaan diri dan penghargaan diri mendorong individu untuk lebih termotivasi dan percaya akan kemampuan akademisnya. Selain itu, kualitas tidur yang baik juga dikaitkan dengan performa akademik yang lebih tinggi, karena tidur yang cukup mendukung fungsi kognitif, memori, dan konsentrasi yang optimal.
+
+Hubungan antara self-esteem dan sleep quality juga mungkin menunjukkan bahwa individu dengan self-esteem yang tinggi cenderung memiliki kualitas tidur yang lebih baik, karena mereka mampu mengelola stres dengan lebih efektif. Temuan ini menyoroti pentingnya menjaga kesehatan mental, di mana peningkatan self-esteem dan kualitas tidur dapat berkontribusi positif terhadap kinerja akademik dan kesejahteraan secara keseluruhan.
